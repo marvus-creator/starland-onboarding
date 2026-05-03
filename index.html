@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StarLand – Onboarding</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --purple:       #7c3aed;
+      --purple-light: #ede9fe;
+      --purple-mid:   #a78bfa;
+      --purple-dark:  #5b21b6;
+      --gray-bg:      #f5f5f8;
+      --gray-border:  #e4e4e7;
+      --text-main:    #18181b;
+      --text-muted:   #71717a;
+      --white:        #ffffff;
+      --step-line:    #d4d4d8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-bg);
+      min-height: 100vh;
+      color: var(--text-main);
+    }
+
+    /* ── NAVBAR ─────────────────────────────────────── */
+    .sl-navbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-border);
+      padding: .85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .sl-brand {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+    .sl-brand i { color: var(--purple); font-size: 1.4rem; }
+    .sl-user {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: .9rem;
+      color: var(--text-muted);
+    }
+    .sl-user i { font-size: 1.3rem; color: var(--text-muted); }
+
+    /* ── MAIN LAYOUT ─────────────────────────────────── */
+    .sl-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+    .sl-heading {
+      text-align: center;
+      margin-bottom: 2.2rem;
+    }
+    .sl-heading h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: .35rem;
+    }
+    .sl-heading p { color: var(--text-muted); font-size: .97rem; margin: 0; }
+
+    /* ── CARD LAYOUT ─────────────────────────────────── */
+    .sl-card {
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: 0 2px 20px rgba(0,0,0,.07);
+      overflow: hidden;
+    }
+    .sl-sidebar {
+      border-right: 1px solid var(--gray-border);
+      padding: 2rem 1.5rem;
+    }
+    .sl-content { padding: 2rem 2rem 1.5rem; }
+
+    /* ── STEP LIST ───────────────────────────────────── */
+    .step-list { list-style: none; padding: 0; margin: 0; }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: .65rem 0;
+      position: relative;
+    }
+    .step-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 44px;
+      width: 2px;
+      height: calc(100% - 12px);
+      background: var(--step-line);
+    }
+    .step-item.done::after,
+    .step-item.active::after { background: var(--purple-mid); }
+
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+      border: 2px solid var(--step-line);
+      color: var(--text-muted);
+      background: var(--white);
+      transition: all .25s;
+      z-index: 1;
+    }
+    .step-item.done  .step-icon { background: var(--purple); border-color: var(--purple); color: #fff; }
+    .step-item.active .step-icon { background: var(--purple); border-color: var(--purple); color: #fff; box-shadow: 0 0 0 4px var(--purple-light); }
+
+    .step-label {
+      padding-top: .55rem;
+      font-size: .92rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+    .step-item.done .step-label,
+    .step-item.active .step-label { color: var(--text-main); }
+
+    /* ── PROGRESS BAR ────────────────────────────────── */
+    .sl-progress-wrap { margin-bottom: 1.8rem; }
+    .sl-progress-bar-bg {
+      height: 6px;
+      border-radius: 99px;
+      background: #e4e4e7;
+      overflow: hidden;
+    }
+    .sl-progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--purple-dark), var(--purple-mid));
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+    .sl-progress-pct {
+      text-align: right;
+      font-size: .82rem;
+      color: var(--text-muted);
+      margin-top: .3rem;
+    }
+
+    /* ── FORM PANEL ──────────────────────────────────── */
+    .form-panel { display: none; animation: fadeIn .3s ease; }
+    .form-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    .form-panel h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1.4rem;
+      color: var(--text-main);
+    }
+
+    .sl-input {
+      border: 1px solid var(--gray-border);
+      border-radius: 10px;
+      padding: .75rem 1rem;
+      font-size: .93rem;
+      color: var(--text-main);
+      background: #fafafa;
+      width: 100%;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .sl-input::placeholder { color: #a1a1aa; }
+    .sl-input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px var(--purple-light);
+      background: #fff;
+    }
+    .sl-input.is-invalid { border-color: #ef4444; box-shadow: 0 0 0 3px #fee2e2; }
+
+    .sl-label {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: .3rem;
+      display: block;
+    }
+
+    /* ── BUTTONS ─────────────────────────────────────── */
+    .sl-btn-nav {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gray-border);
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .sl-btn-nav:hover:not(:disabled) { border-color: var(--purple); color: var(--purple); }
+    .sl-btn-nav:disabled { opacity: .35; cursor: default; }
+
+    .sl-btn-submit {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 99px;
+      padding: .65rem 2.2rem;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .sl-btn-submit:hover { background: var(--purple-dark); transform: translateY(-1px); }
+    .sl-btn-submit:active { transform: translateY(0); }
+
+    .sl-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--gray-border);
+    }
+
+    /* ── SUCCESS ─────────────────────────────────────── */
+    .sl-success {
+      text-align: center;
+      padding: 3rem 1rem;
+      display: none;
+    }
+    .sl-success.show { display: block; animation: fadeIn .4s ease; }
+    .sl-success-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--purple-light);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+      font-size: 2rem;
+      color: var(--purple);
+    }
+    .sl-success h2 { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.4rem; margin-bottom: .5rem; }
+    .sl-success p { color: var(--text-muted); }
+
+    /* ── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 767px) {
+      .sl-sidebar { border-right: none; border-bottom: 1px solid var(--gray-border); padding: 1.25rem 1rem; }
+      .sl-content  { padding: 1.25rem 1rem 1rem; }
+      .step-label  { font-size: .83rem; }
+      .step-icon   { width: 34px; height: 34px; font-size: .9rem; }
+      .step-item:not(:last-child)::after { left: 16px; top: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="sl-navbar">
+    <a class="sl-brand" href="#">
+      <i class="bi bi-star-fill"></i> StarLand
+    </a>
+    <div class="sl-user">
+      <span>Hi, Kavita Khati</span>
+      <i class="bi bi-person-circle"></i>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="sl-main">
+
+    <!-- Heading -->
+    <div class="sl-heading">
+      <h1>Welcome to StarLand</h1>
+      <p>Complete the 7 steps to get started</p>
+    </div>
+
+    <!-- Card -->
+    <div class="sl-card">
+      <div class="row g-0">
+
+        <!-- Sidebar -->
+        <div class="col-12 col-md-4 col-lg-3 sl-sidebar">
+          <ul class="step-list" id="stepList">
+            <li class="step-item done" data-step="0">
+              <div class="step-icon"><i class="bi bi-person-fill"></i></div>
+              <span class="step-label">Organization Profile</span>
+            </li>
+            <li class="step-item done" data-step="1">
+              <div class="step-icon"><i class="bi bi-geo-alt-fill"></i></div>
+              <span class="step-label">Territories and Sites</span>
+            </li>
+            <li class="step-item active" data-step="2">
+              <div class="step-icon"><i class="bi bi-people-fill"></i></div>
+              <span class="step-label">Roles and Employees</span>
+            </li>
+            <li class="step-item" data-step="3">
+              <div class="step-icon"><i class="bi bi-grid-3x3-gap-fill"></i></div>
+              <span class="step-label">Products and Services</span>
+            </li>
+            <li class="step-item" data-step="4">
+              <div class="step-icon"><i class="bi bi-calendar3"></i></div>
+              <span class="step-label">Scheduler Settings</span>
+            </li>
+            <li class="step-item" data-step="5">
+              <div class="step-icon"><i class="bi bi-currency-dollar"></i></div>
+              <span class="step-label">Payment Settings</span>
+            </li>
+            <li class="step-item" data-step="6">
+              <div class="step-icon"><i class="bi bi-clipboard2-check-fill"></i></div>
+              <span class="step-label">Create Work Order</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Content -->
+        <div class="col-12 col-md-8 col-lg-9 sl-content">
+
+          <!-- Progress -->
+          <div class="sl-progress-wrap">
+            <div class="sl-progress-bar-bg">
+              <div class="sl-progress-fill" id="progressFill" style="width:42%"></div>
+            </div>
+            <div class="sl-progress-pct" id="progressPct">42%</div>
+          </div>
+
+          <!-- STEP 0 – Org Profile -->
+          <div class="form-panel" id="panel-0">
+            <h2>Organization Profile</h2>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="sl-label">Organization Name</label>
+                <input type="text" class="sl-input" placeholder="Organization Name"/>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Organization Type</label>
+                <input type="text" class="sl-input" placeholder="Organization Type"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Phone No</label>
+                <input type="tel" class="sl-input" placeholder="Phone No"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Email Id</label>
+                <input type="email" class="sl-input" placeholder="Email Id"/>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Location</label>
+                <input type="text" class="sl-input" placeholder="Location"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 1 – Territories -->
+          <div class="form-panel" id="panel-1">
+            <h2>Territories and Sites</h2>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="sl-label">Territory Name</label>
+                <input type="text" class="sl-input" placeholder="Territory Name"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Region</label>
+                <input type="text" class="sl-input" placeholder="Region"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Country</label>
+                <input type="text" class="sl-input" placeholder="Country"/>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Site Address</label>
+                <input type="text" class="sl-input" placeholder="Site Address"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2 – Roles (default active) -->
+          <div class="form-panel active" id="panel-2">
+            <h2>Roles and Employees</h2>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="sl-label">Organization Name</label>
+                <input type="text" class="sl-input" placeholder="Organization Name"/>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Organization Type</label>
+                <input type="text" class="sl-input" placeholder="Organization Type"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Phone No</label>
+                <input type="tel" class="sl-input" placeholder="Phone No"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Email Id</label>
+                <input type="email" class="sl-input" placeholder="Email Id"/>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Location</label>
+                <input type="text" class="sl-input" placeholder="Location"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3 – Products -->
+          <div class="form-panel" id="panel-3">
+            <h2>Products and Services</h2>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="sl-label">Product Name</label>
+                <input type="text" class="sl-input" placeholder="Product Name"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Category</label>
+                <input type="text" class="sl-input" placeholder="Category"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Price</label>
+                <input type="number" class="sl-input" placeholder="Price"/>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Description</label>
+                <textarea class="sl-input" rows="3" placeholder="Description"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4 – Scheduler -->
+          <div class="form-panel" id="panel-4">
+            <h2>Scheduler Settings</h2>
+            <div class="row g-3">
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Working Hours Start</label>
+                <input type="time" class="sl-input"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Working Hours End</label>
+                <input type="time" class="sl-input"/>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Time Zone</label>
+                <select class="sl-input">
+                  <option value="">Select Time Zone</option>
+                  <option>UTC+0 – London</option>
+                  <option>UTC+2 – Kigali</option>
+                  <option>UTC+3 – Nairobi</option>
+                  <option>UTC-5 – New York</option>
+                  <option>UTC+5:30 – Mumbai</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 5 – Payment -->
+          <div class="form-panel" id="panel-5">
+            <h2>Payment Settings</h2>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="sl-label">Payment Method</label>
+                <select class="sl-input">
+                  <option value="">Select Method</option>
+                  <option>Bank Transfer</option>
+                  <option>Credit Card</option>
+                  <option>Mobile Money</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Account Number</label>
+                <input type="text" class="sl-input" placeholder="Account Number"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Bank Name</label>
+                <input type="text" class="sl-input" placeholder="Bank Name"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Currency</label>
+                <select class="sl-input">
+                  <option>USD</option>
+                  <option>RWF</option>
+                  <option>EUR</option>
+                  <option>KES</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 6 – Work Order -->
+          <div class="form-panel" id="panel-6">
+            <h2>Create Work Order</h2>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="sl-label">Work Order Title</label>
+                <input type="text" class="sl-input" placeholder="Work Order Title"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Assigned To</label>
+                <input type="text" class="sl-input" placeholder="Employee Name"/>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="sl-label">Due Date</label>
+                <input type="date" class="sl-input"/>
+              </div>
+              <div class="col-12">
+                <label class="sl-label">Notes</label>
+                <textarea class="sl-input" rows="3" placeholder="Additional notes..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Success -->
+          <div class="sl-success" id="successMsg">
+            <div class="sl-success-icon"><i class="bi bi-check-lg"></i></div>
+            <h2>You're all set! 🎉</h2>
+            <p>Your StarLand account has been fully configured. You can now start using the platform.</p>
+          </div>
+
+          <!-- Nav buttons -->
+          <div class="sl-nav-row" id="navRow">
+            <button class="sl-btn-nav" id="btnPrev" disabled><i class="bi bi-chevron-left"></i></button>
+            <button class="sl-btn-submit" id="btnSubmit">Submit</button>
+            <button class="sl-btn-nav" id="btnNext"><i class="bi bi-chevron-right"></i></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TOTAL_STEPS = 7;
+    // Start at step 2 (matching screenshot: 42%)
+    let currentStep = 2;
+
+    const stepItems  = document.querySelectorAll('.step-item');
+    const panels     = document.querySelectorAll('.form-panel');
+    const fill       = document.getElementById('progressFill');
+    const pct        = document.getElementById('progressPct');
+    const btnPrev    = document.getElementById('btnPrev');
+    const btnNext    = document.getElementById('btnNext');
+    const btnSubmit  = document.getElementById('btnSubmit');
+    const successMsg = document.getElementById('successMsg');
+    const navRow     = document.getElementById('navRow');
+
+    function getProgress(step) {
+      return Math.round(((step + 1) / TOTAL_STEPS) * 100);
+    }
+
+    function render() {
+      const p = getProgress(currentStep);
+      fill.style.width = p + '%';
+      pct.textContent  = p + '%';
+
+      stepItems.forEach((item, i) => {
+        item.classList.remove('done', 'active');
+        if (i < currentStep)  item.classList.add('done');
+        if (i === currentStep) item.classList.add('active');
+      });
+
+      panels.forEach((panel, i) => {
+        panel.classList.toggle('active', i === currentStep);
+      });
+
+      btnPrev.disabled = currentStep === 0;
+      btnNext.disabled = currentStep === TOTAL_STEPS - 1;
+    }
+
+    function finish() {
+      panels.forEach(p => p.classList.remove('active'));
+      stepItems.forEach(item => item.classList.replace('active','done') || item.classList.add('done'));
+      fill.style.width = '100%';
+      pct.textContent  = '100%';
+      successMsg.classList.add('show');
+      navRow.style.display = 'none';
+    }
+
+    btnPrev.addEventListener('click', () => {
+      if (currentStep > 0) { currentStep--; render(); }
+    });
+
+    btnNext.addEventListener('click', () => {
+      if (currentStep < TOTAL_STEPS - 1) { currentStep++; render(); }
+    });
+
+    btnSubmit.addEventListener('click', () => {
+      if (currentStep === TOTAL_STEPS - 1) {
+        finish();
+      } else {
+        currentStep++;
+        render();
+      }
+    });
+
+    // Sidebar step click navigation
+    stepItems.forEach((item, i) => {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => {
+        currentStep = i;
+        render();
+      });
+    });
+
+    // Update submit label
+    function updateSubmitLabel() {
+      btnSubmit.textContent = currentStep === TOTAL_STEPS - 1 ? 'Finish' : 'Submit';
+    }
+
+    const origRender = render;
+    render = function() { origRender(); updateSubmitLabel(); };
+    render();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

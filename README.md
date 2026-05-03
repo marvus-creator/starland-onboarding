@@ -7,21 +7,21 @@ A fully responsive multi-step onboarding form built with HTML, Bootstrap 5, and 
 ### 1. Wireframe
 Tool used: **Framebox**
 
-![Wireframe](./wireframe.png)
+![Wireframe](./Wireframes_using_framebox.png)
 
 ---
 
 ### 2. Mockup
 Tool used: **Figma**
 
-🔗 [View Mockup on Figma](PASTE_YOUR_FIGMA_LINK_HERE)
+🔗 [View Mockup on Figma](https://www.figma.com/design/jNFSy3Yf4F7X9nsNgLnXKP/Mockup-using-Figma?node-id=2-2&t=4WV10EnQQGLPiz6B-1)
 
 ---
 
 ### 3. Prototype
 Tool used: **Figma**
 
-🔗 [View Prototype on Figma](PASTE_YOUR_FIGMA_LINK_HERE)
+🔗 [View Prototype on Figma](https://www.figma.com/make/SCbpLaVNptImFxIosYrWlP/Prototype-using-Figma?t=LgUXODkOfcahAy4V-20&fullscreen=1)
 
 ---
 

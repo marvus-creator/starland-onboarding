@@ -7,7 +7,7 @@ A fully responsive multi-step onboarding form built with HTML, Bootstrap 5, and 
 ### 1. Wireframe
 Tool used: **Framebox**
 
-![Wireframe](./Wireframes_using_framebox.png)
+![Wireframe](./Wireframes%20using%20framebox.png)
 )
 
 ---

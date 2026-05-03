@@ -31,22 +31,13 @@ Tool used: **HTML + Bootstrap 5 + Vanilla JavaScript**
 
 File: `index.html`
 
-**Features:**
-- 7-step onboarding flow with sidebar navigation
-- Progress bar that updates per step
-- Click any step in sidebar to jump to it
-- Prev / Submit / Next navigation buttons
-- Success screen on completion
-- Inline SVG icons (no CDN dependency)
-
 ---
 
 ### 5. Responsive Design
 The UI is fully responsive across:
-- 📱 Mobile (< 768px) — sidebar stacks above the form
-- 💻 Tablet (768px–1024px) — side-by-side layout
-- 🖥️ Desktop (> 1024px) — full layout with wider form area
-
+- 📱 Mobile 
+- 💻 Tablet
+- 🖥️ Desktop 
 ---
 
 ### 6. JavaScript
